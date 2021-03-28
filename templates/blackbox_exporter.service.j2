@@ -1,0 +1,38 @@
+[Unit]
+Description=Prometheus Blackbox Exporter
+After=network-online.target auditd.service
+StartLimitInterval=0
+
+[Service]
+Type=simple
+User={{ blackbox_exporter_system_user }}
+Group={{ blackbox_exporter_system_group }}
+PermissionsStartOnly=true
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart={{blackbox_exporter_install_dir}}/blackbox_exporter \
+  --web.listen-address=0.0.0.0:9115 \
+  --log.level=info \
+  --config.file=/etc/blackbox_exporter.yml
+
+KillMode=process
+SyslogIdentifier=blackbox_exporter
+Restart=always
+RestartSec=5
+LimitNOFILE=4096
+
+LockPersonality=true
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+PrivateTmp=true
+ProtectHome=true
+RemoveIPC=true
+RestrictSUIDSGID=true
+
+AmbientCapabilities=CAP_NET_RAW
+ProtectControlGroups=true
+ProtectKernelModules=true
+ProtectKernelTunables=yes
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

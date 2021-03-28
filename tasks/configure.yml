@@ -1,0 +1,19 @@
+- name: Copy the blackbox exporter systemd service file
+  template:
+    src: blackbox_exporter.service.j2
+    dest: /lib/systemd/system/blackbox_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart blackbox_exporter
+
+- name: Create configuration file
+  template:
+    src: blackbox_exporter.yml.j2
+    dest: /etc/blackbox_exporter.yml
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload blackbox_exporter

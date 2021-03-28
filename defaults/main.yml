@@ -1,0 +1,82 @@
+---
+# defaults file for v98765_exporter_blackbox
+blackbox_exporter_version: 0.18.0
+blackbox_exporter_system_user: "blackbox-exp"
+blackbox_exporter_system_group: "blackbox-exp"
+blackbox_exporter_install_dir: "/usr/local/bin"
+blackbox_exporter_repo_dir: "/var/tmp/archive"
+
+blackbox_exporter_configuration_modules:
+  https_self:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      no_follow_redirects: false
+      fail_if_ssl: false
+      fail_if_not_ssl: true
+      preferred_ip_protocol: "ipv4"
+      valid_status_codes:
+        - 200
+        - 401
+        - 403
+      tls_config:
+        insecure_skip_verify: true
+  https_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      no_follow_redirects: false
+      fail_if_ssl: false
+      fail_if_not_ssl: true
+      preferred_ip_protocol: "ipv4"
+      valid_status_codes:
+        - 200
+        - 401
+        - 403
+  http_2xx:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      no_follow_redirects: false
+      fail_if_ssl: true
+      fail_if_not_ssl: false
+      preferred_ip_protocol: "ipv4"
+      valid_status_codes:
+        - 200
+        - 401
+        - 403
+  icmp:
+    prober: icmp
+    timeout: 1s
+    icmp:
+      preferred_ip_protocol: ip4
+  imap_starttls:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      tls: false
+      preferred_ip_protocol: "ipv4"
+      query_response:
+        - starttls: true
+        - expect: "^* OK (.+)$"
+        - send: ". capability\r"
+        - expect: "^* CAPABILITY IMAP(.+)$"
+        - send: "logout\r"
+  smtp_starttls:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      preferred_ip_protocol: "ipv4"
+      query_response:
+        - expect: "^220 (.+) ESMTP (.+)$"
+        - send: "EHLO prober\r"
+        - expect: "^250-STARTTLS"
+        - send: "STARTTLS\r"
+        - expect: "^220"
+        - starttls: true
+        - send: "EHLO prober\r"
+        - expect: "^250-AUTH"
+        - send: "QUIT\r"

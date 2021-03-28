@@ -1,0 +1,15 @@
+---
+# handlers file for v98765_exporter_blackbox
+- name: restart blackbox_exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: blackbox_exporter
+    state: restarted
+
+- name: reload blackbox_exporter
+  become: true
+  systemd:
+    daemon_reload: true
+    name: blackbox_exporter
+    state: reloaded

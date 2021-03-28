@@ -1,0 +1,3 @@
+{{ ansible_managed | comment }}
+modules:
+  {{ blackbox_exporter_configuration_modules | to_nice_yaml(indent=2) | indent(2, False) }}
