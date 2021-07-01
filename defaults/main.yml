@@ -1,6 +1,6 @@
 ---
 # defaults file for v98765_exporter_blackbox
-blackbox_exporter_version: 0.18.0
+blackbox_exporter_version: 0.19.0
 blackbox_exporter_system_user: "blackbox-exp"
 blackbox_exporter_system_group: "blackbox-exp"
 blackbox_exporter_install_dir: "/usr/local/bin"

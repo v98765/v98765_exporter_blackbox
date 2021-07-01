@@ -13,7 +13,7 @@ Role Variables
 
 Name | Default Value | Description
 ---|---|---
-`blackbox_exporter_version` |  "0.18.0" | current version
+`blackbox_exporter_version` |  "0.19.0" | current version
 `blackbox_exporter_system_user` | "blackbox-exp" |
 `blackbox_exporter_system_group` | "blackbox-exp" |
 `blackbox_exporter_install_dir` |  "/usr/local/bin" |
@@ -23,7 +23,7 @@ Name | Default Value | Description
 ```sh
 mkdir -p /var/tmp/archive
 cd /var/tmp/archive
-wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.18.0/blackbox_exporter-0.18.0.linux-amd64.tar.gz
+wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 ```
 
 Example Playbook
